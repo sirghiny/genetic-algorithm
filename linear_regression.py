@@ -80,7 +80,6 @@ def evaluate_population(population):
     """
     Evaluate a population of individuals and return the best among them.
     """
-    # print('Evaluating Population.')
     fitness_list = [get_fitness(individual, inputs)
                     for individual in tqdm(population)]
     error_list = sorted(fitness_list, key=lambda i: i['error'])
@@ -88,8 +87,6 @@ def evaluate_population(population):
     best_individuals_stash.append(best_individuals[0])
     print('Error: ', best_individuals[0]['error'],
           'COD: ', best_individuals[0]['COD'])
-    # print('Least Error: ', best_individuals[0]['error'])
-    # print('Least Error"s COD: ', best_individuals[0]['COD'])
     return best_individuals
 
 
