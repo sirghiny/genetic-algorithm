@@ -5,12 +5,6 @@ from numpy import array, dot, mean
 from numpy.linalg import pinv
 
 
-"""
-Use modulus for COD in general problems.
-
-"""
-
-
 def generate_data():
     """
     We will generate data with a clear pattern.
