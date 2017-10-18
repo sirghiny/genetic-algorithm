@@ -3,6 +3,7 @@ from math import floor
 from tqdm import tqdm
 from numpy import array, dot, mean
 from numpy.linalg import pinv
+from sys import exit
 
 
 def generate_data():
@@ -34,11 +35,11 @@ def multiple_linear_regression(inputs, outputs):
     return {'COD': COD, 'coeff': coeff, 'error': av_error}
 
 
-def check_termination_condition():
+def check_termination_condition(best_individual):
     """
     Check if the current_best_individual is better of equal to the expected.
     """
-    if ((current_best_individual['error'] <= best_possible['error'])
+    if ((best_individual['COD'] >= 99.0)
             or (generation_count == max_generations)):
         return True
     else:
@@ -84,7 +85,7 @@ def evaluate_population(population):
                     for individual in tqdm(population)]
     error_list = sorted(fitness_list, key=lambda i: i['error'])
     best_individuals = error_list[: selection_size]
-    best_individuals_stash.append(best_individuals[0])
+    best_individuals_stash.append(best_individuals[0]['coeff'])
     print('Error: ', best_individuals[0]['error'],
           'COD: ', best_individuals[0]['COD'])
     return best_individuals
@@ -150,12 +151,15 @@ probability_of_gene_mutating = 0.25
 best_possible = multiple_linear_regression(inputs, outputs)
 best_individuals_stash = [create_individual(individual_size)]
 initial_population = create_population(individual_size, 1000)
-
 current_population = initial_population
-current_best_individual = get_fitness(best_individuals_stash[-1], inputs)
+termination = False
 generation_count = 0
-while check_termination_condition() is not True:
+while termination is False:
+    current_best_individual = get_fitness(best_individuals_stash[-1], inputs)
     print('Generation: ', generation_count)
     best_individuals = evaluate_population(current_population)
     current_population = get_new_generation(best_individuals)
+    termination = check_termination_condition(current_best_individual)
     generation_count += 1
+else:
+    print(get_fitness(best_individuals_stash[-1], inputs))
