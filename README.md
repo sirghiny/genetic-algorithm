@@ -6,3 +6,8 @@ This presents a creative way of doing linear regression using a genetic algorith
 An explanation of the code and the concepts behind it can be found at:
 
 https://medium.com/the-andela-way/on-genetic-algorithms-and-their-application-in-solving-regression-problems-4e37ac1115d5
+
+Execute the app by running main.py:
+
+    python3 main.py
+
